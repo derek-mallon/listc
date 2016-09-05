@@ -7,6 +7,49 @@ typedef struct handle{
     bool alive;
 }handle;
 
+#define ARRAY(type) array_of_##type
+
+#define ARRAY_CREATE(type,init_cap) array_of_##type##_create(init_cap)
+
+#define ARRAY_DESTROY(type,array) array_of_##type##_destroy(array)
+
+#define ARRAY_ADD(type,array,data) array_of_##type##_add(array,data)
+
+#define ARRAY_EXPAND(type,array,amount) array_of_##type##_expand(array,amount)
+
+#define ARRAY_DEC(type)\
+typedef struct ARRAY(type){\
+    type* array;\
+    size_t size;\
+    size_t capacity;\
+}ARRAY(type);\
+ARRAY(type) array_of_##type##_create(size_t init_cap);\
+void array_of_##type##_destroy(array_of_##type* array);\
+size_t array_of_##type##_add(array_of_##type* array,type data);\
+void array_of_##type##_expand(array_of_##type* array,size_t amount);\
+
+#define ARRAY_DEF(type)\
+ARRAY(type) array_of_##type##_create(size_t init_cap){\
+    ARRAY(type) output = {malloc(sizeof(type) * init_cap),0,init_cap};\
+    return output;\
+}\
+void array_of_##type##_destroy(array_of_##type* array){\
+    free(array->array);\
+}\
+size_t array_of_##type##_add(array_of_##type* array,type data);\
+    if(array->size >= array->capacity){\
+        ARRAY_EXPAND(array,array->capacity*2)\
+    }\
+    array->array[array->size++] = data\
+    return array->size--;\
+}\
+void array_of_##type##_expand(array_of_##type* array,size_t amount){\
+    type* tmp_array = realloc(array->array,sizeof(type)* amount);\
+    array->array  = tmp_array;\
+}\
+
+
+
 
 #define LIST_ITEM(type) item_of_##type
 
@@ -25,6 +68,7 @@ typedef struct handle{
 #define LIST_GET(type,list,handle_index) list_of_##type##_get(list,handle_index)
 
 #define LIST_DELETE(type,list,handle_index) list_of_##type##_delete(list,handle_index)
+
 
 #define LIST_DEC(type)\
 typedef struct LIST_ITEM(type){\
