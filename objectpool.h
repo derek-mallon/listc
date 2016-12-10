@@ -34,7 +34,7 @@ type* pool_of_##type##_next_free(pool_of_##type* pool,size_t* index);\
 type* pool_of_##type##_next(pool_of_##type* pool);\
 
 #define POOL_DEF(type)\
-ARRAY_DEF(wrapper_of_##int);\
+ARRAY_DEF(wrapper_of_##type);\
 pool_of_##type pool_of_##type##_create(size_t capacity){\
     int i;\
     pool_of_##type result;\
