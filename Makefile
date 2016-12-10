@@ -9,8 +9,8 @@ tests:
 docs:
 	doxygen
 install: 
-	cp list.h /usr/local/include
+	cp array.h /usr/local/include
 	cp objectpool.h /usr/local/include
 remove:
-	rm /usr/local/include/list.h
+	rm /usr/local/include/array.h
 	rm /usr/local/include/objectpool.h
